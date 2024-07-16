@@ -28,6 +28,12 @@ Route::group(['middleware' => ['verify.shopify']], function() {
 });
 
 // wehbook controllers
-Route::post('/webhook/app/uninstalled', [WehbookResponseController::class, 'appUninstalled']);
-Route::post('/webhook/orders/paid', [WehbookResponseController::class, 'ordersPaid']);
-Route::post('/webhook/carts/update', [WehbookResponseController::class, 'cartsUpdate']);
+// Route::post('/webhook/app/uninstalled', [WehbookResponseController::class, 'appUninstalled']);
+// Route::post('/webhook/orders/paid', [WehbookResponseController::class, 'ordersPaid']);
+// Route::post('/webhook/carts/update', [WehbookResponseController::class, 'cartsUpdate']);
+
+Route::group(['middleware' => ['auth.webhook']], function() {
+    Route::post('/webhook/app/uninstalled', [WehbookResponseController::class, 'appUninstalled']);
+    Route::post('/webhook/orders/paid', [WehbookResponseController::class, 'ordersPaid']);
+    Route::post('/webhook/carts/update', [WehbookResponseController::class, 'cartsUpdate']);
+});

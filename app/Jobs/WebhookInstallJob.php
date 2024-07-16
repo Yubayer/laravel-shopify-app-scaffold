@@ -54,7 +54,7 @@ class WebhookInstallJob implements ShouldQueue
                 'format' => 'json'
             ];
 
-            $webhook_queries = [$app_install_webhook_query, $orders_paid_webhook_query, $carts_update_webhook_query];
+            $webhook_queries = [$app_install_webhook_query, $orders_paid_webhook_query];
 
             foreach($webhook_queries as $webhook_query) {
                 $response = $shop->api()->rest('POST', '/admin/api/2024-04/webhooks.json', ['webhook' => $webhook_query]);
