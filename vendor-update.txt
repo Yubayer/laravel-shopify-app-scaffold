@@ -1,0 +1,15 @@
+//package kyon147/laravel-shopify --- make change
+
+#Actions/AuthenticateShop
+    $domain = $request->get('shop');
+    event(new AppInstalledEvent($result['shop_id'], $domain));
+
+#Messaging/Events/AppInstalledEvent
+    public $shopId;
+    public $domain;
+    
+    public function __construct(ShopId $shop_id, $domain)
+    {
+        $this->shopId = $shop_id;
+        $this->domain = $domain;
+    }
