@@ -36,13 +36,13 @@ class WehbookResponseController extends Controller
 
         switch ($topic) {
             case 'app/uninstalled':
-                $this->appUninstalled($data, $domain);
+                $this->appUninstalled($data, $shop);
                 break;
             case 'orders/paid':
-                $this->ordersPaid($data, $domain);
+                $this->ordersPaid($data, $shop);
                 break;
             case 'carts/update':
-                $this->cartsUpdate($data, $domain);
+                $this->cartsUpdate($data, $shop);
                 break;
             default:
                 Log::info('Webhook Topic Not Found:', ['topic' => $topic]);
@@ -53,26 +53,25 @@ class WehbookResponseController extends Controller
     }
 
     // app uninstalled webhook
-    public function appUninstalled($data, $domain)
+    public function appUninstalled($data, $shop)
     {
-        if(!empty($domain)) {
-            AppUninstalledWebhookJob::dispatch($domain);
-        }
+        Log::info('App Uninstalld:', ['data' => $data, 'domain' => $shop]);
+        AppUninstalledWebhookJob::dispatch($shop);
         
         return response()->json(['success' => true], 200);
     }
 
     // orders paid webhook
-    public function ordersPaid($data, $domain)
+    public function ordersPaid($data, $shop)
     {
-        Log::info('Order Paid:', ['order' => $data, 'domain' => $domain]);
+        Log::info('Order Paid:', ['order' => $data, 'shop' => $shop]);
         return 200;
     }
 
     // carts update webhook
-    public function cartsUpdate($data, $domain)
+    public function cartsUpdate($data, $shop)
     {
-        Log::info('Cart Update:', ['cart' => $data, 'domain' => $domain]);
+        Log::info('Cart Update:', ['cart' => $data['id'], 'shop' => $shop]);
         return 200;
     }
 }

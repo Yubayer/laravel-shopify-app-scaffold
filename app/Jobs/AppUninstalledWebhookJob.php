@@ -18,14 +18,14 @@ class AppUninstalledWebhookJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $domain;
+    protected $shop;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($domain)
+    public function __construct($shop)
     {
-        $this->domain = $domain;
+        $this->shop = $shop;
     }
 
     /**
@@ -35,12 +35,12 @@ class AppUninstalledWebhookJob implements ShouldQueue
     {
         try{
             // update password null
-            $update = User::where('name', $this->domain)->update(['password' => '']);
+            $update = $this->shop->update(['password' => '']);
             if(!$update) {
                 throw new \Exception('Password update failed');
-                Log::error('Password update failed for domain: ' . $this->domain);
+                Log::error('Password update failed for domain: ' . $this->shop->name);
             } else {
-                Log::info('Password update success for domain: ' . $this->domain);
+                Log::info('Password update success for domain: ' . $this->shop->name);
             }
         } catch (\Exception $e) {
             Log::error('AppUninstalledWebhookJob: ---- failed catch', ['error' => $e->getMessage()]);

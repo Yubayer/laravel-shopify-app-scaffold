@@ -50,10 +50,6 @@ class WebhookInstallJob implements ShouldQueue
                 ];
             }
 
-            
-
-            Log::info('data:', ['webhook_queries' => $webhook_queries]);
-
             foreach ($webhook_queries as $webhook_query) {
                 $response = $shop->api()->rest('POST', '/admin/api/2024-04/webhooks.json', ['webhook' => $webhook_query]);
 
