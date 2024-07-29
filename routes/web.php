@@ -36,4 +36,5 @@ Route::group(['middleware' => ['auth.webhook']], function() {
     Route::post('/webhook/app/uninstalled', [WehbookResponseController::class, 'appUninstalled']);
     Route::post('/webhook/orders/paid', [WehbookResponseController::class, 'ordersPaid']);
     Route::post('/webhook/carts/update', [WehbookResponseController::class, 'cartsUpdate']);
+    Route::post('/webhook/topics/all', [WehbookResponseController::class, 'webhookTopics']);
 });

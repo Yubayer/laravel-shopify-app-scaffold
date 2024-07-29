@@ -16,10 +16,11 @@ class IndexController extends Controller
 
         // dispatch WebhookInstallJob
         // WebhookInstallJob::dispatch($authShop);
-        
+
         $webhooks = $authShop->api()->rest('GET', '/admin/api/2024-04/webhooks.json')['body']['webhooks'];
 
         dump($webhooks);
         return view('welcome');
     }
+
 }

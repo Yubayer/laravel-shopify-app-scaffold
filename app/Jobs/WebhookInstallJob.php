@@ -29,34 +29,32 @@ class WebhookInstallJob implements ShouldQueue
      */
     public function handle(): void
     {
-        try{
+        try {
             $shop = $this->shop;
 
-            $app_uninstall_address = env('WEBHOOK_URL') . '/webhook/app/uninstalled';
-            $orders_paid_address = env('WEBHOOK_URL') . '/webhook/orders/paid';
-            $carts_update_address = env('WEBHOOK_URL') . '/webhook/carts/update';
+            $app_topics_url = env('WEBHOOK_URL') . '/webhook/topics/all';
 
-            $app_install_webhook_query = [
-                'topic' => 'app/uninstalled',
-                'address' => $app_uninstall_address,
-                'format' => 'json'
+            $webhook_topics = [
+                'app/uninstalled',
+                'orders/paid',
+                'carts/update'
             ];
 
-            $orders_paid_webhook_query = [
-                'topic' => 'orders/paid',
-                'address' => $orders_paid_address,
-                'format' => 'json'
-            ];
+            $webhook_queries = [];
 
-            $carts_update_webhook_query = [
-                'topic' => 'carts/update',
-                'address' => $carts_update_address,
-                'format' => 'json'
-            ];
+            foreach ($webhook_topics as $topic) {
+                $webhook_queries[] = [
+                    'topic' => $topic,
+                    'address' => $app_topics_url,
+                    'format' => 'json'
+                ];
+            }
 
-            $webhook_queries = [$app_install_webhook_query, $orders_paid_webhook_query];
+            
 
-            foreach($webhook_queries as $webhook_query) {
+            Log::info('data:', ['webhook_queries' => $webhook_queries]);
+
+            foreach ($webhook_queries as $webhook_query) {
                 $response = $shop->api()->rest('POST', '/admin/api/2024-04/webhooks.json', ['webhook' => $webhook_query]);
 
                 if ($response['errors']) {
@@ -65,8 +63,7 @@ class WebhookInstallJob implements ShouldQueue
                     Log::info('Webhook registered successfully ', ['response' => $response]);
                 }
             }
-
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('WebhookInstallJob ---- failed, catch: ', ['error' => $e->getMessage()]);
         }
     }

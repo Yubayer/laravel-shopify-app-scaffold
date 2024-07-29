@@ -36,6 +36,7 @@ class AppInstalledListener
             
             $authShop->domain = $shop_data['myshopify_domain'];
             $authShop->shop_id = $shop_data['id'];
+            $authShop->shop_admin_id = "gid://shopify/Shop/".$shop_data['id'];
 
             //update the user
             $authShop->save();
