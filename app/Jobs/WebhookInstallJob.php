@@ -37,7 +37,11 @@ class WebhookInstallJob implements ShouldQueue
             $webhook_topics = [
                 'app/uninstalled',
                 'orders/paid',
-                'carts/update'
+                'carts/update',
+                //mandatory webhook topics
+                // 'customers/data_request',
+                // 'customers/redact',
+                // 'shop/redact',
             ];
 
             $webhook_queries = [];

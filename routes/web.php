@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\IndexController;
-use App\Http\Controllers\WehbookResponseController;
+use App\Http\Controllers\{
+    IndexController,
+    WehbookResponseController,
+    BillingController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -25,16 +28,10 @@ use App\Http\Controllers\WehbookResponseController;
 
 Route::group(['middleware' => ['verify.shopify']], function() {
     Route::get('/', [IndexController::class, 'index'])->name('home');
+    Route::get('/app-billing-view', [BillingController::class, 'appBilling'])->name('app.billing-view');
 });
 
 // wehbook controllers
-// Route::post('/webhook/app/uninstalled', [WehbookResponseController::class, 'appUninstalled']);
-// Route::post('/webhook/orders/paid', [WehbookResponseController::class, 'ordersPaid']);
-// Route::post('/webhook/carts/update', [WehbookResponseController::class, 'cartsUpdate']);
-
 Route::group(['middleware' => ['auth.webhook']], function() {
-    Route::post('/webhook/app/uninstalled', [WehbookResponseController::class, 'appUninstalled']);
-    Route::post('/webhook/orders/paid', [WehbookResponseController::class, 'ordersPaid']);
-    Route::post('/webhook/carts/update', [WehbookResponseController::class, 'cartsUpdate']);
     Route::post('/webhook/topics/all', [WehbookResponseController::class, 'webhookTopics']);
 });

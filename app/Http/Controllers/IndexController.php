@@ -12,15 +12,15 @@ class IndexController extends Controller
     {
         $authShop = $request->user();
 
-        dump(env('SHOPIFY_API_SECRET'));
+        $charges = $authShop->charges;
 
         // dispatch WebhookInstallJob
         // WebhookInstallJob::dispatch($authShop);
 
-        $webhooks = $authShop->api()->rest('GET', '/admin/api/2024-04/webhooks.json')['body']['webhooks'];
+        // $webhooks = $authShop->api()->rest('GET', '/admin/api/2024-04/webhooks.json')['body']['webhooks'];
+        // dump($webhooks);
 
-        dump($webhooks);
-        return view('welcome');
+        return view('welcome', compact('charges'));
     }
 
 }

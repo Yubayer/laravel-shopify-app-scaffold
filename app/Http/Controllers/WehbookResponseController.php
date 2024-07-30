@@ -44,6 +44,12 @@ class WehbookResponseController extends Controller
             case 'carts/update':
                 $this->cartsUpdate($data, $shop);
                 break;
+            case 'customers/data_request':
+                break;
+            case 'customers/redact':
+                break;
+            case 'shop/redact':
+                break;
             default:
                 Log::info('Webhook Topic Not Found:', ['topic' => $topic]);
                 break;
@@ -65,13 +71,35 @@ class WehbookResponseController extends Controller
     public function ordersPaid($data, $shop)
     {
         Log::info('Order Paid:', ['order' => $data, 'shop' => $shop]);
-        return 200;
+        return response()->json(['success' => true], 200);
     }
 
     // carts update webhook
     public function cartsUpdate($data, $shop)
     {
         Log::info('Cart Update:', ['cart' => $data['id'], 'shop' => $shop]);
-        return 200;
+        return response()->json(['success' => true], 200);
+    }
+
+    // Mandatory webhooks
+    // customers data request webhook
+    public function customersDataRequest($data, $shop)
+    {
+        Log::info('Customer Data Request:', ['data' => $data, 'shop' => $shop]);
+        return response()->json(['success' => true], 200);
+    }
+
+    // customers redact webhook
+    public function customersRedact($data, $shop)
+    {
+        Log::info('Customer Redact:', ['data' => $data, 'shop' => $shop]);
+        return response()->json(['success' => true], 200);
+    }
+
+    // shop redact webhook
+    public function shopRedact($data, $shop)
+    {
+        Log::info('Shop Redact:', ['data' => $data, 'shop' => $shop]);
+        return response()->json(['success' => true], 200);
     }
 }
