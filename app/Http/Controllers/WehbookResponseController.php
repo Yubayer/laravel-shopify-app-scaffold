@@ -24,6 +24,14 @@ class WehbookResponseController extends Controller
     // webhook topics handler
     public function webhookTopics(Request $request)
     {
+        // $requested_url = $request->url();
+        // $header = $request->header();
+        // Log::info('Webhook Topics Data1:', ['url' => $requested_url]);
+        // Log::info('Webhook Topics Data2:', ['header' => $header]);
+        // Log::info('Webhook Topics Data3:', ['data' => $request->all()]);
+        // Log::info('Webhook Topics Data4:', ['data' => $request->getContent()]);
+
+
         $isValid = $this->verifyWebhook($request);
         if(!$isValid) {
             return response()->json(['success' => false], 401);
