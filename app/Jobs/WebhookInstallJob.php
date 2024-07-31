@@ -31,8 +31,7 @@ class WebhookInstallJob implements ShouldQueue
     {
         try {
             $shop = $this->shop;
-
-            $app_topics_url = env('WEBHOOK_URL') . '/webhook/topics/all';
+            $app_topics_url = env('WEBHOOK_URL') . env('WEBHOOK_TOPICS_URL_1', '/webhook/topics/all');
 
             $webhook_topics = [
                 'app/uninstalled',
