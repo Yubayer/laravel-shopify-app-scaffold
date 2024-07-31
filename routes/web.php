@@ -31,7 +31,9 @@ Route::group(['middleware' => ['verify.shopify']], function() {
     Route::get('/app-billing-view', [BillingController::class, 'appBilling'])->name('app.billing-view');
 });
 
+
 // wehbook controllers
 Route::group(['middleware' => ['auth.webhook']], function() {
-    Route::post('/webhook/topics/all', [WehbookResponseController::class, 'webhookTopics']);
+    Route::post(env('WEBHOOK_TOPICS_URL_1', '/webhook/topics/all'), [WehbookResponseController::class, 'webhookTopics']);
+    Route::post(env('WEBHOOK_TOPICS_URL_2', '/public/webhook/topics/all'), [WehbookResponseController::class, 'webhookTopics']);
 });
