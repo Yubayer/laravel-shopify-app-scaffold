@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     IndexController,
     WehbookResponseController,
-    BillingController
+    BillingController,
+    AuthController
 };
 
 /*
@@ -25,6 +26,8 @@ use App\Http\Controllers\{
 // Route::get('/', function () {
 //     return view('welcome');
 // })->middleware(['verify.shopify'])->name('home');
+
+Route::match(['get', 'post'], '/auth', [AuthController::class, 'authenticate'])->name('auth');
 
 Route::group(['middleware' => ['verify.shopify']], function() {
     Route::get('/', [IndexController::class, 'index'])->name('home');
