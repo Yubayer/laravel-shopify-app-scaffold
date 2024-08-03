@@ -351,7 +351,7 @@ return [
     'listen' => [
         \Osiset\ShopifyApp\Messaging\Events\AppInstalledEvent::class => [
             // \App\Listeners\MyListener::class,
-            \App\Listeners\AppInstalledListener::class,
+            // \App\Listeners\AppInstalledListener::class,
         ],
         \Osiset\ShopifyApp\Messaging\Events\ShopAuthenticatedEvent::class => [
             // \App\Listeners\MyListener::class,
